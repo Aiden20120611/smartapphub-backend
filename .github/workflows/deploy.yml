@@ -3,7 +3,7 @@ name: Deploy Backend
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -12,8 +12,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: List files in root
+        run: ls -la
+
       - name: Unzip backend
-        run: unzip backend.zip -d ./backend
+        run: |
+          if [ -f "backend.zip" ]; then
+            unzip -o backend.zip -d ./backend
+            ls -la ./backend
+          else
+            echo "❌ backend.zip not found in root directory!"
+            exit 1
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -21,11 +31,25 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: cd backend && npm install
+        run: |
+          if [ -f "./backend/package.json" ]; then
+            cd backend && npm install
+          else
+            echo "❌ package.json not found in backend folder!"
+            exit 1
+          fi
 
-      - name: Start server and expose to internet
+      - name: Start server and test
         run: |
           cd backend
           node index.js &
-          sleep 5
-          curl -s https://localhost.run/link http://localhost:3000
+          SERVER_PID=$!
+          sleep 10
+          if curl -s http://localhost:3000; then
+            echo "✅ Server is running on port 3000"
+            curl -s https://localhost.run/link http://localhost:3000
+          else
+            echo "❌ Server failed to start on port 3000"
+            kill $SERVER_PID
+            exit 1
+          fi
