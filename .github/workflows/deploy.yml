@@ -56,5 +56,3 @@ jobs:
             kill $SERVER_PID
             exit 1
           fi
-
-
