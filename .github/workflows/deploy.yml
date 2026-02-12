@@ -19,6 +19,10 @@ jobs:
         run: |
           if [ -f "backend.zip" ]; then
             unzip -o backend.zip -d ./backend
+            # 自动处理子文件夹，把文件移到 backend 根目录
+            if [ -d "./backend/$(ls ./backend | head -1)" ]; then
+              mv ./backend/$(ls ./backend | head -1)/* ./backend/
+            fi
             ls -la ./backend
           else
             echo "❌ backend.zip not found in root directory!"
@@ -53,3 +57,4 @@ jobs:
             kill $SERVER_PID
             exit 1
           fi
+
