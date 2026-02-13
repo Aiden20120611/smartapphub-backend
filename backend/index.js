@@ -64,9 +64,9 @@ app.use((req, res, next) => {
   });
 });
 
-// 启动服务器
-app.listen(PORT, () => {
-  console.log(`后端服务运行在 http://localhost:${PORT}`);
+// 👉 我只改了这里：加上 0.0.0.0，让外部能访问
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`后端服务运行在 http://0.0.0.0:${PORT}`);
 });
 
 module.exports = app;
