@@ -7,7 +7,8 @@ const { initDataFiles } = require('./utils/dataManager');
 const { ensureDirectories, STORAGE_PATH } = require('./utils/fileManager');
 
 const app = express();
-const PORT = 3001;
+// 👉 关键修改：从环境变量获取端口，不再硬编码
+const PORT = process.env.PORT || 3001;
 
 // 初始化系统
 const initSystem = async () => {
@@ -64,7 +65,7 @@ app.use((req, res, next) => {
   });
 });
 
-// 👉 我只改了这里：加上 0.0.0.0，让外部能访问
+// 启动服务器，监听 0.0.0.0
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`后端服务运行在 http://0.0.0.0:${PORT}`);
 });
