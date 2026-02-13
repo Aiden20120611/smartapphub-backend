@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "username": "admin",
+    "password": "admin2026",
+    "role": "superadmin",
+    "createdAt": "2026-02-10T07:42:23.817Z"
+  },
+  {
+    "id": "2",
+    "username": "appmanager",
+    "password": "app2026",
+    "role": "appmanager",
+    "createdAt": "2026-02-10T07:42:23.819Z"
+  }
+]
