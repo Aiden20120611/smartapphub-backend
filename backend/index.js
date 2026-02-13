@@ -7,7 +7,7 @@ const { initDataFiles } = require('./utils/dataManager');
 const { ensureDirectories, STORAGE_PATH } = require('./utils/fileManager');
 
 const app = express();
-// 👉 关键修改：从环境变量获取端口，不再硬编码
+// 关键修改：使用正确的环境变量 PORT，而不是 WEB_PORT
 const PORT = process.env.PORT || 3001;
 
 // 初始化系统
