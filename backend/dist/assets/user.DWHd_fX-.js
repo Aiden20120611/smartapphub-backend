@@ -1,0 +1,1 @@
+import{a as r}from"./index.CnCq3VPH.js";const u={login:(e,s)=>r.post("/users/login",{username:e,password:s}),getUserInfo:(e,s)=>r.get("/users/info",{params:{username:e,password:s}}),getAllUsers:()=>r.get("/users"),addUser:e=>r.post("/users",e),deleteUser:e=>r.delete(`/users/${e}`)};export{u};
